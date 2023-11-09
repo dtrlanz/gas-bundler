@@ -1,3 +1,4 @@
+import * as fsPromises from 'fs/promises';
 import path from 'path';
 import { isRelativeUrl } from '@chialab/node-resolve';
 import { Build } from '@chialab/esbuild-rna';
@@ -55,12 +56,12 @@ async function innerCollect($, dom, elements, target, format, type, attrs = {}, 
     const result = await helpers.emitBuild({
         entryPoints: [...builds.values()],
         target,
-        format,
+        format: 'cjs',
     });
 
     const outputs = result.metafile.outputs;
     const styleFiles = Object.keys(outputs).filter((outName) => outName.endsWith('.css'));
-    Object.entries(outputs).forEach(([outName, output]) => {
+    const promises = Object.entries(outputs).map(async ([outName, output]) => {
         if (outName.endsWith('.map')) {
             // ignore map files
             return;
@@ -79,19 +80,14 @@ async function innerCollect($, dom, elements, target, format, type, attrs = {}, 
 
         const fullOutName = path.join(options.workingDir, outName);
 
-        if ($(element).attr('src')) {
-            const outputPath = helpers.resolveRelativePath(fullOutName, options.entryDir, '');
-            $(element).attr('src', outputPath);
-            $(element).html('');
-        } else {
-            const outputPath = helpers.resolveRelativePath(fullOutName, options.entryDir);
-            $(element).html(`import '${outputPath}'`);
-        }
-        $(element).removeAttr('type').attr('type', type);
+        const contents = await fsPromises.readFile(fullOutName);
+        $(element).html(contents.toString('utf-8'));
+        $(element).removeAttr('type').attr('type', 'application/javascript');
         for (const attrName in attrs) {
             $(element).removeAttr(attrName).attr(attrName, attrs[attrName]);
         }
     });
+    await Promise.all(promises);
 
     if (styleFiles.length) {
         const script = $('<script>');
