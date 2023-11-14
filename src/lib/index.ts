@@ -1,5 +1,6 @@
 import esbuild from 'esbuild';
 import { htmlPlugin } from "./html-plugin.js";
+import { assignGlobal } from "./plugin-assign-global.js";
 
 export async function build(options: esbuild.BuildOptions) {
     await esbuild.build({
@@ -9,7 +10,7 @@ export async function build(options: esbuild.BuildOptions) {
         bundle: true,
         format: 'cjs',
         plugins: [
-            htmlPlugin,
+            htmlPlugin
         ],
     });
 }
