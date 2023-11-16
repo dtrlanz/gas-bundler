@@ -1,16 +1,37 @@
 {
-    "type": "module",
-    "devDependencies": {
-        "@chialab/esbuild-plugin-html": "^0.17.3",
-        "@chialab/esbuild-rna": "^0.17.8",
-        "esbuild": "0.19.5"
-    },
-    "dependencies": {
-        "@jimp/custom": "^0.22.10",
-        "@jimp/jpeg": "^0.22.10",
-        "@jimp/plugin-resize": "^0.22.10",
-        "@jimp/png": "^0.22.10",
-        "cheerio": "^1.0.0-rc.12",
-        "js-beautify": "^1.14.11"
-    }
+  "type": "module",
+  "devDependencies": {
+    "@chialab/esbuild-plugin-html": "^0.17.3",
+    "@chialab/esbuild-rna": "^0.17.8",
+    "esbuild": "0.19.5"
+  },
+  "dependencies": {
+    "@jimp/custom": "^0.22.10",
+    "@jimp/jpeg": "^0.22.10",
+    "@jimp/plugin-resize": "^0.22.10",
+    "@jimp/png": "^0.22.10",
+    "cheerio": "^1.0.0-rc.12",
+    "js-beautify": "^1.14.11"
+  },
+  "name": "@dtrlanz/gas-bundler",
+  "description": "**GAS Bundler**",
+  "version": "0.1.0",
+  "main": "./dist/lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtrlanz/gas-bundler.git"
+  },
+  "keywords": [
+    "apps-script"
+  ],
+  "author": "Daniel Lanz",
+  "license": "MIT",
+  "types": "./dist/lib/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/dtrlanz/gas-bundler/issues"
+  },
+  "homepage": "https://github.com/dtrlanz/gas-bundler#readme"
 }
