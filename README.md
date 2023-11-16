@@ -22,8 +22,8 @@ After installing the package, set up a build script `build.js`.
 
 ```
 await build({
-    entryPoints: ['src/tests/server.ts', 'src/tests/client.html'],
-    outdir: 'src/tests/out',
+    entryPoints: ['src/server.ts', 'src/client.html'],
+    outdir: 'out',
 });
 ```
 
@@ -34,6 +34,31 @@ node ./build.js
 ```
 
 With the exception of `entryPoints`, all other options are passed directly to esbuild (potentially overriding defaults provided by this package). See the [esbuild documentation](https://esbuild.github.io/api/).
+
+## Client-side scripts
+
+The HTML loader will inline client-side scripts when bundling HTML files. These script tags must have the attribute `type="module"`.
+
+For example, say you have the following file `client.html`:
+
+```
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8"></head>
+  <body>
+    <script type="module">
+        import { message } from './client-script.ts';
+        console.log(message);
+    </script>
+  </body>
+</html>
+```
+
+The relevant code would be contained in a file `client-script.ts` in the same folder:
+
+```
+export const message = 'Hello world';
+```
 
 ## License
 
