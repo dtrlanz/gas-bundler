@@ -1,3 +1,5 @@
+// Original
+// --------
 // Copyright (c) 2021 Chialab
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,6 +20,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// Modifications
+// -------------
+// Copyright (c) 2023 Daniel Lanz
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+import * as fsPromises from 'fs/promises';
 import path from 'path';
 import { isRelativeUrl } from '@chialab/node-resolve';
 import { Build } from '@chialab/esbuild-rna';
@@ -72,7 +97,7 @@ export async function collectStyles($, dom, options, helpers) {
         target: options.target[0],
     });
 
-    Object.entries(result.metafile.outputs).forEach(([outName, output]) => {
+    for (const [outName, output] of Object.entries(result.metafile.outputs)) {
         if (outName.endsWith('.map')) {
             // ignore map files
             return;
@@ -94,9 +119,10 @@ export async function collectStyles($, dom, options, helpers) {
         if ($(element).is('link')) {
             $(element).attr('href', outputPath);
         } else {
-            $(element).html(`@import '${outputPath}'`);
+            const contents = await fsPromises.readFile(fullOutName);
+            $(element).html(contents.toString('utf-8'));
         }
-    });
+    };
 
     return [result];
 }
