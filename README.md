@@ -66,6 +66,10 @@ The relevant code would be contained in a file `client-script.ts` in the same fo
 export const message = 'Hello world';
 ```
 
+## Attribution & Disclaimer
+
+Google is a trademark of Google LLC. This project is not endorsed by or affiliated with Google in any way.
+
 ## License
 
 **GAS Bundler** is released under the [MIT](./LICENSE) license.
