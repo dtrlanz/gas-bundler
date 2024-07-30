@@ -9,11 +9,13 @@
     "@jimp/png": "^0.22.10",
     "cheerio": "^1.0.0-rc.12",
     "js-beautify": "^1.14.11",
-    "esbuild": "^0.21.3"
+    "esbuild": "^0.21.3",
+    "@chialab/esbuild-rna": "^0.19.0-beta.3",
+    "@chialab/node-resolve": "^0.19.0-beta.1"
   },
   "name": "@dtrlanz/gas-bundler",
   "description": "**GAS Bundler**",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "main": "./dist/lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
